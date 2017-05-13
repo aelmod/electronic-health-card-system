@@ -1,41 +1,97 @@
 package ua.com.bzabza.ehcs.patient;
 
-import lombok.Setter;
-import ua.com.bzabza.ehcs.card.Card;
+import com.fasterxml.jackson.annotation.JsonView;
+import lombok.*;
+import ua.com.bzabza.ehcs.UserEntity;
+import ua.com.bzabza.ehcs.city.City;
+import ua.com.bzabza.ehcs.country.Country;
+import ua.com.bzabza.ehcs.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Setter
+@Getter
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
-public class Patient {
+@Table(name = "patients")
+public class Patient implements Serializable, UserEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(AllPrimitivesView.class)
+    private Integer id;
+
+    @NonNull
+    @JsonView(AllPrimitivesView.class)
+    private String login;
+
+    @NonNull
+    @Column(nullable = false)
+    private String password;
+
+    private String secret;
+
+    @NonNull
+    @JsonView(AllPrimitivesView.class)
     private String fullName;
 
+    @NonNull
+    @JsonView(AllPrimitivesView.class)
     private Date birthday;
+
+    @NonNull
+    @JsonView(AllPrimitivesView.class)
+    private Date registerDate;
 
     public enum Sex {
         MALE, FEMALE;
     }
 
+    @NonNull
+    @JsonView(AllPrimitivesView.class)
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-//    private City city;
+    @NonNull
+    @JsonView(FullView.class)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id")
+    private Country country;
 
-//    private User user;
+    @NonNull
+    @JsonView(FullView.class)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id")
+    private City city;
 
+    @NonNull
+    @OneToOne(mappedBy = "patient")
+    private User user;
+
+    @NonNull
+    @JsonView(AllPrimitivesView.class)
     private String phone;
 
+    @NonNull
+    @JsonView(AllPrimitivesView.class)
     private String email;
 
+    @NonNull
+    @JsonView(AllPrimitivesView.class)
     private String description;
 
-    @OneToOne(mappedBy = "patient")
-    private Card card;
+//    @OneToOne(mappedBy = "patient")
+//    private Card card;
 
-    private String photo;
+//    @JsonView(AllPrimitivesView.class)
+//    private String photo;
+
+    public interface AllPrimitivesView {
+    }
+
+    public interface FullView extends AllPrimitivesView {
+    }
 }

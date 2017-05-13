@@ -1,5 +1,6 @@
 package ua.com.bzabza.ehcs.role;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 import ua.com.bzabza.ehcs.role.privilege.Privilege;
 import ua.com.bzabza.ehcs.user.User;
@@ -11,14 +12,17 @@ import java.util.Collection;
 @Setter
 @RequiredArgsConstructor
 @NoArgsConstructor
+@Table(name = "roles")
 @Entity
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @JsonView(MinimalView.class)
+    private Integer id;
 
     @NonNull
+    @JsonView(MinimalView.class)
     private String name;
 
     @ManyToMany(mappedBy = "roles")
@@ -32,4 +36,7 @@ public class Role {
             inverseJoinColumns = @JoinColumn(
                     name = "privilege_id", referencedColumnName = "id"))
     private Collection<Privilege> privileges;
+
+    public interface MinimalView {
+    }
 }

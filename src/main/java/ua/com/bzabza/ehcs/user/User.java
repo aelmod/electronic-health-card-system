@@ -2,11 +2,16 @@ package ua.com.bzabza.ehcs.user;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
+import ua.com.bzabza.ehcs.UserEntity;
+import ua.com.bzabza.ehcs.microblog.Microblog;
+import ua.com.bzabza.ehcs.patient.Patient;
 import ua.com.bzabza.ehcs.role.Role;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @RequiredArgsConstructor
 @NoArgsConstructor
@@ -14,7 +19,7 @@ import java.util.Collection;
 @Setter
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User implements Serializable, UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +44,13 @@ public class User implements Serializable {
     private String password;
 
     private String secret;
+
+    @OneToOne
+    private Patient patient;
+
+    @JsonView(FullView.class)
+    @OneToMany(mappedBy = "user")
+    private List<Microblog> microblogs = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(

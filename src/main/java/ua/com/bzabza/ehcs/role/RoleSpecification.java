@@ -14,7 +14,7 @@ import java.util.Optional;
 @Setter
 public class RoleSpecification implements EntitySpecification<Role> {
 
-    private Optional<String> oName;
+    private Optional<String> oName = Optional.empty();
 
     @Override
     public CriteriaQuery<Role> toCriteria(CriteriaBuilder cb) {

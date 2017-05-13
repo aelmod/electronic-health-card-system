@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ua.com.bzabza.ehcs.role.RoleService;
 import ua.com.bzabza.ehcs.security.CurrentUser;
+import ua.com.bzabza.ehcs.security.google2fa.User2faToken;
 
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -47,7 +47,7 @@ public class UserController {
     public User2faToken registerUser(@RequestBody @Valid UserRegisterForm registerForm) {
         User registeredUser = registerForm.toUser();
         registeredUser.setSecret(Base32.random());
-        registeredUser.setRoles(Collections.singletonList(roleService.findOneByName("ROLE_USER")));
+//        registeredUser.setRoles(Collections.singletonList(roleService.findOneByName("ROLE_USER")));
         return userService.save(registeredUser);
     }
 }

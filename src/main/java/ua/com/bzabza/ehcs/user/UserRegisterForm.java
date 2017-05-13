@@ -4,10 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import ua.com.bzabza.ehcs.role.Role;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Collections;
 import java.util.Objects;
 
 @Getter
@@ -29,6 +31,9 @@ public class UserRegisterForm {
     private String login;
 
     @NotNull
+    private Integer roleId;
+
+    @NotNull
     @NotEmpty
     @Size(min = 8, max = 32)
     private String password;
@@ -41,6 +46,10 @@ public class UserRegisterForm {
     }
 
     public User toUser() {
-        return new User(fullName, email, login, password);
+        User user = new User(fullName, email, login, password);
+        Role role = new Role();
+        role.setId(roleId);
+        user.setRoles(Collections.singletonList(role));
+        return user;
     }
 }

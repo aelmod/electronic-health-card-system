@@ -1,4 +1,4 @@
-package ua.com.bzabza.ehcs.user;
+package ua.com.bzabza.ehcs.security.google2fa;
 
 import lombok.Getter;
 
