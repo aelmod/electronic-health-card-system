@@ -3,7 +3,6 @@ package ua.com.bzabza.ehcs.user;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 import ua.com.bzabza.ehcs.UserEntity;
-import ua.com.bzabza.ehcs.microblog.Microblog;
 import ua.com.bzabza.ehcs.patient.Patient;
 import ua.com.bzabza.ehcs.role.Role;
 
@@ -47,10 +46,6 @@ public class User implements Serializable, UserEntity {
 
     @OneToMany(mappedBy = "user")
     private List<Patient> patients = new ArrayList<>();
-
-    @JsonView(FullView.class)
-    @OneToMany(mappedBy = "user")
-    private List<Microblog> microblogs = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(

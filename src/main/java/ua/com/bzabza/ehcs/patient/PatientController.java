@@ -1,5 +1,6 @@
 package ua.com.bzabza.ehcs.patient;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.jboss.aerogear.security.otp.api.Base32;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +21,16 @@ public class PatientController {
     }
 
     @GetMapping
+    @JsonView(Patient.AllPrimitivesView.class)
     public List<Patient> getAll() {
         PatientSpecification patientSpecification = new PatientSpecification();
         return patientService.getBy(patientSpecification);
+    }
+
+    @GetMapping("{id}")
+    @JsonView(Patient.FullView.class)
+    public Patient getById(@PathVariable Integer id) {
+        return patientService.getByPk(id);
     }
 
     @PostMapping("register")

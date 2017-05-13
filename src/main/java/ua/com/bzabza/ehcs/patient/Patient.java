@@ -6,6 +6,7 @@ import lombok.*;
 import ua.com.bzabza.ehcs.UserEntity;
 import ua.com.bzabza.ehcs.city.City;
 import ua.com.bzabza.ehcs.country.Country;
+import ua.com.bzabza.ehcs.patient.card.Card;
 import ua.com.bzabza.ehcs.user.User;
 
 import javax.persistence.*;
@@ -73,6 +74,7 @@ public class Patient implements Serializable, UserEntity {
     @NonNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonView(FullView.class)
     private User user;
 
     @NonNull
@@ -83,8 +85,8 @@ public class Patient implements Serializable, UserEntity {
     @JsonView(AllPrimitivesView.class)
     private String email;
 
-//    @OneToOne(mappedBy = "patient")
-//    private Card card;
+    @OneToOne(mappedBy = "patient")
+    private Card card;
 
 //    @JsonView(AllPrimitivesView.class)
 //    private String photo;
@@ -92,6 +94,6 @@ public class Patient implements Serializable, UserEntity {
     public interface AllPrimitivesView {
     }
 
-    public interface FullView extends AllPrimitivesView {
+    public interface FullView extends AllPrimitivesView, User.MinimalView, Country.MinimumView, City.MinimumView {
     }
 }

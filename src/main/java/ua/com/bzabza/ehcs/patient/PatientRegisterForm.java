@@ -47,9 +47,6 @@ public class PatientRegisterForm {
     @NotNull
     private int cityId;
 
-    @NotNull
-    private String address;
-
     @AssertTrue(message = "The passwords you provided do not match. Please correct and resubmit.")
     private boolean isValidConfirmedPassword() {
         return Objects.equals(password, confirmPassword);

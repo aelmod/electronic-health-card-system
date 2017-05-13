@@ -18,7 +18,7 @@ public class MicroblogForm {
         Microblog microblog = new Microblog();
         microblog.setText(text);
         microblog.setCreationTime(new Date());
-        microblog.setUser(user);
+//        microblog.setUser(user);
         return microblog;
     }
 }

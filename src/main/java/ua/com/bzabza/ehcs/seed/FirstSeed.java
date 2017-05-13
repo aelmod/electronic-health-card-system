@@ -20,10 +20,18 @@ public class FirstSeed {
 
     @PostConstruct
     public void initData() {
-        User user = new User("test", "test@test.com", "test", "pass");
-        user.setSecret("D32K7NDRILUMMXP6");
+//        User user = new User("test", "test@test.com", "test", "pass");
+//        user.setSecret("D32K7NDRILUMMXP6");
+//        try {
+//            userService.getUserByUsername("test");
+//        } catch (EntityNotFoundException e) {
+//            userService.save(user);
+//        }
+
+        User user = new User("hyisos11Loh", "hyisos11@mail.ru", "hyisos11", "hyisos11");
+        user.setSecret("IQTRIHV5V2UCFWNA");
         try {
-            userService.getUserByUsername("test");
+            userService.getUserByUsername("hyisos11");
         } catch (EntityNotFoundException e) {
             userService.save(user);
         }
