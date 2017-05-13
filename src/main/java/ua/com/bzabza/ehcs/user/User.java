@@ -45,8 +45,8 @@ public class User implements Serializable, UserEntity {
 
     private String secret;
 
-    @OneToOne
-    private Patient patient;
+    @OneToMany(mappedBy = "user")
+    private List<Patient> patients = new ArrayList<>();
 
     @JsonView(FullView.class)
     @OneToMany(mappedBy = "user")

@@ -1,5 +1,6 @@
 package ua.com.bzabza.ehcs.patient;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 import ua.com.bzabza.ehcs.UserEntity;
@@ -40,10 +41,12 @@ public class Patient implements Serializable, UserEntity {
 
     @NonNull
     @JsonView(AllPrimitivesView.class)
+    @JsonFormat(pattern = "dd.MM.yyyy")
     private Date birthday;
 
     @NonNull
     @JsonView(AllPrimitivesView.class)
+    @JsonFormat(pattern = "dd.MM.yyyy")
     private Date registerDate;
 
     public enum Sex {
@@ -68,7 +71,8 @@ public class Patient implements Serializable, UserEntity {
     private City city;
 
     @NonNull
-    @OneToOne(mappedBy = "patient")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @NonNull
@@ -78,10 +82,6 @@ public class Patient implements Serializable, UserEntity {
     @NonNull
     @JsonView(AllPrimitivesView.class)
     private String email;
-
-    @NonNull
-    @JsonView(AllPrimitivesView.class)
-    private String description;
 
 //    @OneToOne(mappedBy = "patient")
 //    private Card card;

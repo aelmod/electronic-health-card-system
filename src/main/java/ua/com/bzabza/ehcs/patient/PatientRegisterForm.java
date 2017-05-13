@@ -37,6 +37,8 @@ public class PatientRegisterForm {
     @Email
     private String email;
 
+    @NotNull
+    @NotEmpty
     private String phone;
 
     @NotNull
@@ -62,7 +64,6 @@ public class PatientRegisterForm {
      */
     @AssertTrue(message = "Invalid phone number format")
     private boolean isValidPhoneNumber() {
-        if (Objects.isNull(phone)) return true;
         if (phone.matches("[0-9*#+() -]{13}")) return true;
         if (phone.matches("\\d{10}")) return true;
         if (phone.matches("\\d{3}-\\d{3}-\\d{4}\\s(x|(ext))\\d{3,5}")) return true;
@@ -77,10 +78,6 @@ public class PatientRegisterForm {
     @NotNull
     private Integer doctorId;
 
-    @NotNull
-    @NotEmpty
-    private String description;
-
     public Patient toPatient() {
         Country country = new Country();
         country.setId(countryId);
@@ -88,6 +85,6 @@ public class PatientRegisterForm {
         city.setId(cityId);
         User doctor = new User();
         doctor.setId(doctorId);
-        return new Patient(login, password, fullName, birthday, new Date(), sex, country, city, doctor, phone, email, description);
+        return new Patient(login, password, fullName, birthday, new Date(), sex, country, city, doctor, phone, email);
     }
 }

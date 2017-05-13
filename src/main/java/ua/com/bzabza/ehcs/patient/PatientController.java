@@ -3,6 +3,7 @@ package ua.com.bzabza.ehcs.patient;
 import org.jboss.aerogear.security.otp.api.Base32;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ua.com.bzabza.ehcs.security.google2fa.User2faToken;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,10 +25,10 @@ public class PatientController {
         return patientService.getBy(patientSpecification);
     }
 
-    @PostMapping
-    public void register(@RequestBody @Valid PatientRegisterForm patientRegisterForm) {
+    @PostMapping("register")
+    public User2faToken register(@RequestBody @Valid PatientRegisterForm patientRegisterForm) {
         Patient registeredPatient = patientRegisterForm.toPatient();
         registeredPatient.setSecret(Base32.random());
-        patientService.save(registeredPatient);
+        return patientService.save(registeredPatient);
     }
 }
