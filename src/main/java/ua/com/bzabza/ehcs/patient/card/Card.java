@@ -3,7 +3,7 @@ package ua.com.bzabza.ehcs.patient.card;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
-import ua.com.bzabza.ehcs.microblog.Microblog;
+import ua.com.bzabza.ehcs.patient.card.record.CardRecord;
 import ua.com.bzabza.ehcs.patient.Patient;
 
 import javax.persistence.*;
@@ -30,14 +30,12 @@ public class Card {
     private Patient patient;
 
     @OneToMany(mappedBy = "card")
-    @JsonView(MinimalView.class)
-    private List<Microblog> microblogs = new ArrayList<>();
+    @JsonView(FullView.class)
+    private List<CardRecord> cardRecords = new ArrayList<>();
 
     private String patientInfo;
 
-    public interface MinimalView {
-    }
+    public interface MinimalView {}
 
-    public interface FullView extends MinimalView, Patient.FullView, Microblog.MinimalView {
-    }
+    public interface FullView extends MinimalView, Patient.FullView, CardRecord.MinimalView {}
 }

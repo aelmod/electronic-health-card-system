@@ -91,9 +91,7 @@ public class Patient implements Serializable, UserEntity {
 //    @JsonView(AllPrimitivesView.class)
 //    private String photo;
 
-    public interface AllPrimitivesView {
-    }
+    public interface AllPrimitivesView {}
 
-    public interface FullView extends AllPrimitivesView, User.MinimalView, Country.MinimumView, City.MinimumView {
-    }
+    public interface FullView extends AllPrimitivesView, User.MinimalView, Country.MinimumView, City.MinimumView {}
 }

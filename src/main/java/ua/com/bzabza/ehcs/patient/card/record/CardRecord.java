@@ -1,4 +1,4 @@
-package ua.com.bzabza.ehcs.microblog;
+package ua.com.bzabza.ehcs.patient.card.record;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -18,8 +18,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "microblogs")
-public class Microblog implements Serializable {
+@Table(name = "card_records")
+public class CardRecord implements Serializable {
 
     @JsonView(MinimalView.class)
     @Id
@@ -40,19 +40,16 @@ public class Microblog implements Serializable {
 
     @JsonView(MinimalView.class)
     @ManyToMany
-    @JoinTable(name = "microblog_user",
-            joinColumns = {@JoinColumn(name = "microblog_id")},
+    @JoinTable(name = "card_record_user",
+            joinColumns = {@JoinColumn(name = "card_record_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
     private List<User> users = new ArrayList<>();
 //    private User user;
 
-    public interface MinimalView {
-    }
+    public interface MinimalView {}
 
-    public interface WithCard extends MinimalView, Card.FullView {
-    }
+    public interface WithCard extends MinimalView, Card.FullView {}
 
-    public interface FullView extends WithCard {
-    }
+    public interface FullView extends WithCard {}
 }

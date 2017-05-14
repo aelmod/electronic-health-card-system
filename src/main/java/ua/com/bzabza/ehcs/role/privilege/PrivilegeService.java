@@ -2,6 +2,7 @@ package ua.com.bzabza.ehcs.role.privilege;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -15,10 +16,12 @@ public class PrivilegeService {
         this.privilegeRepository = privilegeRepository;
     }
 
+    @Transactional
     public void save(Privilege privilege) {
         privilegeRepository.persist(privilege);
     }
 
+    @Transactional(readOnly = true)
     public Privilege findOneByName(String name) {
         return privilegeRepository.findOneByName(name).orElseThrow(EntityNotFoundException::new);
     }

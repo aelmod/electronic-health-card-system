@@ -9,6 +9,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "privileges")
 public class Privilege {
 
     @Id
