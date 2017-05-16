@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ua.com.bzabza.ehcs.patient.card.Card;
+import ua.com.bzabza.ehcs.patient.card.record.commentary.Commentary;
 import ua.com.bzabza.ehcs.user.User;
 
 import javax.persistence.*;
@@ -37,6 +38,10 @@ public class CardRecord implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")
     private Card card;
+
+    @OneToMany(mappedBy = "cardRecord")
+    @JsonView(FullView.class)
+    private List<Commentary> commentaries = new ArrayList<>();
 
     @JsonView(MinimalView.class)
     @ManyToMany

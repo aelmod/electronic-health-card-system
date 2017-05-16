@@ -13,7 +13,7 @@ class JwtAuthHelper {
 
     private static final String ISSUER = "ElectronicHealthCardSystem";
 
-    private static final String SIGNING_KEY = "^@(Jopka)LolKekCheburek@^($%*$%(((";
+    private static final String SIGNING_KEY = "^@()@^($%*$%23456(((";
 
     public final String CLAIM_USER_ID_NAMING = "userId";
 

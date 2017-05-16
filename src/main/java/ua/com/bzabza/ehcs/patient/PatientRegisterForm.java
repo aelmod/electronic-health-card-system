@@ -17,6 +17,7 @@ import java.util.Objects;
 @Getter
 @Setter
 public class PatientRegisterForm {
+
     @NotNull
     private String fullName;
 
@@ -47,6 +48,12 @@ public class PatientRegisterForm {
     @NotNull
     private int cityId;
 
+    @NotNull
+    private Patient.Sex sex;
+
+    @NotNull
+    private Integer doctorId;
+
     @AssertTrue(message = "The passwords you provided do not match. Please correct and resubmit.")
     private boolean isValidConfirmedPassword() {
         return Objects.equals(password, confirmPassword);
@@ -68,12 +75,6 @@ public class PatientRegisterForm {
         if (phone.matches("\\(\\d{3}\\)-\\d{3}-\\d{4}")) return true;
         return false;
     }
-
-    @NotNull
-    private Patient.Sex sex;
-
-    @NotNull
-    private Integer doctorId;
 
     public Patient toPatient() {
         Country country = new Country();
