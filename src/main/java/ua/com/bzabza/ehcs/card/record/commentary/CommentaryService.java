@@ -1,4 +1,4 @@
-package ua.com.bzabza.ehcs.patient.card.record.commentary;
+package ua.com.bzabza.ehcs.card.record.commentary;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -22,8 +22,7 @@ public class UsernamePasswordVerificationCodeAuthentication implements Authentic
         this.verificationCode = verificationCode;
     }
 
-    public UsernamePasswordVerificationCodeAuthentication() {
-    }
+    public UsernamePasswordVerificationCodeAuthentication() {}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.jboss.aerogear.security.otp.api.Base32;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ua.com.bzabza.ehcs.patient.Patient;
 import ua.com.bzabza.ehcs.role.RoleService;
 import ua.com.bzabza.ehcs.security.CurrentUser;
+import ua.com.bzabza.ehcs.security.google2fa.TokenGenerator;
 import ua.com.bzabza.ehcs.security.google2fa.User2faToken;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -44,17 +45,25 @@ public class UserController {
         return user;
     }
 
-    @GetMapping("patients")
-    @JsonView(Patient.AllPrimitivesView.class)
-    public List<Patient> getPatients(@CurrentUser User user) {
-        return user.getPatients();
-    }
+//    @GetMapping("patients")
+//    @JsonView(Patient.AllPrimitivesView.class)
+//    public List<Patient> getPatients(@CurrentUser User user) {
+//        return user.getPatients();
+//    }
 
-    @PostMapping("register")
-    public User2faToken registerUser(@RequestBody @Valid UserRegisterForm registerForm) {
+    @PostMapping("personnelRegister")
+    public User2faToken personnelRegister(@RequestBody @Valid UserRegisterForm registerForm) {
         User registeredUser = registerForm.toUser();
         registeredUser.setSecret(Base32.random());
-//        registeredUser.setRoles(Collections.singletonList(roleService.findOneByName("ROLE_USER")));
-        return userService.save(registeredUser);
+        registeredUser.setRoles(Collections.singletonList(roleService.findOneByName("ROLE_DOCTOR")));
+        return new TokenGenerator<User>().generateQRUrl(userService.save(registeredUser));
+    }
+
+    @PostMapping("patientRegister")
+    public User2faToken patientRegister(@RequestBody @Valid UserRegisterForm registerForm) {
+        User registeredUser = registerForm.toUser();
+        registeredUser.setSecret(Base32.random());
+        registeredUser.setRoles(Collections.singletonList(roleService.findOneByName("ROLE_PATIENT")));
+        return new TokenGenerator<User>().generateQRUrl(userService.save(registeredUser));
     }
 }

@@ -1,4 +1,4 @@
-package ua.com.bzabza.ehcs.patient.card;
+package ua.com.bzabza.ehcs.card;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

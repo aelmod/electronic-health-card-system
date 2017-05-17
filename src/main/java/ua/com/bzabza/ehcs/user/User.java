@@ -1,17 +1,17 @@
 package ua.com.bzabza.ehcs.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 import ua.com.bzabza.ehcs.UserEntity;
-import ua.com.bzabza.ehcs.patient.Patient;
+import ua.com.bzabza.ehcs.card.Card;
+import ua.com.bzabza.ehcs.city.City;
+import ua.com.bzabza.ehcs.country.Country;
 import ua.com.bzabza.ehcs.role.Role;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @RequiredArgsConstructor
 @NoArgsConstructor
@@ -27,14 +27,6 @@ public class User implements Serializable, UserEntity {
     private Integer id;
 
     @NonNull
-    @JsonView(MinimalView.class)
-    private String fullName;
-
-    @NonNull
-    @JsonView(AllPrimitivesView.class)
-    private String email;
-
-    @NonNull
     @Column(nullable = false)
     @JsonView(MinimalView.class)
     private String username;
@@ -45,8 +37,58 @@ public class User implements Serializable, UserEntity {
 
     private String secret;
 
-    @OneToMany(mappedBy = "user")
-    private List<Patient> patients = new ArrayList<>();
+    @NonNull
+    @JsonView(MinimalView.class)
+    private String fullName;
+
+    @NonNull
+    @JsonView(AllPrimitivesView.class)
+    private String email;
+
+    @NonNull
+    @JsonView(AllPrimitivesView.class)
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private Date birthday;
+
+    @NonNull
+    @JsonView(AllPrimitivesView.class)
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private Date registerDate;
+
+    public enum Sex {
+        MALE, FEMALE;
+    }
+
+    @NonNull
+    @JsonView(AllPrimitivesView.class)
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
+
+    @NonNull
+    @JsonView(FullView.class)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id")
+    private Country country;
+
+    @NonNull
+    @JsonView(FullView.class)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id")
+    private City city;
+
+    @NonNull
+    @JsonView(AllPrimitivesView.class)
+    private String phone;
+
+    @OneToOne(mappedBy = "patient")
+    private Card card;
+
+    @ManyToMany
+    @JoinTable(name = "doctors_patients",
+            joinColumns = {@JoinColumn(name = "doctor_id")},
+            inverseJoinColumns = {@JoinColumn(name = "patient_id")}
+    )
+    private Set<User> doctorPatientRelationship = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -61,5 +103,9 @@ public class User implements Serializable, UserEntity {
 
     public interface AllPrimitivesView extends MinimalView {}
 
-    public interface FullView extends AllPrimitivesView {}
+    public interface FullView extends AllPrimitivesView, Country.MinimumView, City.MinimumView {}
+
+    public interface DoctorView extends MinimalView {}
+
+    public interface PatientView extends MinimalView {}
 }

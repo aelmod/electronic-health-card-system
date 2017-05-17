@@ -1,12 +1,12 @@
-package ua.com.bzabza.ehcs.patient.card.record;
+package ua.com.bzabza.ehcs.card.record;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ua.com.bzabza.ehcs.patient.card.Card;
-import ua.com.bzabza.ehcs.patient.card.record.commentary.Commentary;
+import ua.com.bzabza.ehcs.card.Card;
+import ua.com.bzabza.ehcs.card.record.commentary.Commentary;
 import ua.com.bzabza.ehcs.user.User;
 
 import javax.persistence.*;
@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "card_records")
-public class CardRecord implements Serializable {
+public class Record implements Serializable {
 
     @JsonView(MinimalView.class)
     @Id
@@ -39,14 +39,14 @@ public class CardRecord implements Serializable {
     @JoinColumn(name = "card_id")
     private Card card;
 
-    @OneToMany(mappedBy = "cardRecord")
+    @OneToMany(mappedBy = "record")
     @JsonView(FullView.class)
     private List<Commentary> commentaries = new ArrayList<>();
 
     @JsonView(MinimalView.class)
     @ManyToMany
-    @JoinTable(name = "card_record_user",
-            joinColumns = {@JoinColumn(name = "card_record_id")},
+    @JoinTable(name = "record_user",
+            joinColumns = {@JoinColumn(name = "record_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
     private List<User> users = new ArrayList<>();

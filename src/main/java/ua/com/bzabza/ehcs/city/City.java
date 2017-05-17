@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ua.com.bzabza.ehcs.country.Country;
-import ua.com.bzabza.ehcs.patient.Patient;
+import ua.com.bzabza.ehcs.user.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -37,11 +37,9 @@ public class City implements Serializable {
 
     @OneToMany(mappedBy = "city")
     @JsonView(FullView.class)
-    private Set<Patient> patients = new HashSet<>();
+    private Set<User> patients = new HashSet<>();
 
-    public interface FullView extends MinimumView, Patient.AllPrimitivesView {
-    }
+    public interface FullView extends MinimumView, User.AllPrimitivesView {}
 
-    public interface MinimumView {
-    }
+    public interface MinimumView {}
 }

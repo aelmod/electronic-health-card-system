@@ -1,11 +1,11 @@
-package ua.com.bzabza.ehcs.patient.card.record.commentary;
+package ua.com.bzabza.ehcs.card.record.commentary;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ua.com.bzabza.ehcs.patient.card.record.CardRecord;
+import ua.com.bzabza.ehcs.card.record.Record;
 import ua.com.bzabza.ehcs.user.User;
 
 import javax.persistence.*;
@@ -32,8 +32,8 @@ public class Commentary implements Serializable {
     private Date creationTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "card_record_id")
-    private CardRecord cardRecord;
+    @JoinColumn(name = "record_id")
+    private Record record;
 
     @JsonView(MinimalView.class)
     @ManyToOne(fetch = FetchType.LAZY)

@@ -8,6 +8,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
 
 class JwtAuthHelper {
 
@@ -15,14 +16,17 @@ class JwtAuthHelper {
 
     private static final String SIGNING_KEY = "^@()@^($%*$%23456(((";
 
-    public final String CLAIM_USER_ID_NAMING = "userId";
+    public static final String CLAIM_USER_ID = "userId";
 
-    String createJwt(Integer userId) {
+    public static final String ROLES = "roles";
+
+    static String createJwt(Integer userId, Collection<String> roles) {
         try {
             Algorithm algorithm = Algorithm.HMAC512(SIGNING_KEY);
             return JWT.create()
                     .withIssuer(ISSUER)
-                    .withClaim(CLAIM_USER_ID_NAMING, userId)
+                    .withClaim(CLAIM_USER_ID, userId)
+                    .withArrayClaim(ROLES, roles.toArray(new String[roles.size()]))
 //                    .withExpiresAt(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
                     .sign(algorithm);
         } catch (UnsupportedEncodingException | JWTCreationException exception) {
@@ -30,7 +34,7 @@ class JwtAuthHelper {
         }
     }
 
-    DecodedJWT verifyToken(String token) throws JWTVerificationException {
+    static DecodedJWT verifyToken(String token) throws JWTVerificationException {
         try {
             Algorithm algorithm = Algorithm.HMAC512(SIGNING_KEY);
             JWTVerifier verifier = JWT.require(algorithm)

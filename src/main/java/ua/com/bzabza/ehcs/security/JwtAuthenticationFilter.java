@@ -11,8 +11,6 @@ import java.util.Objects;
 
 public class JwtAuthenticationFilter implements Filter {
 
-    private final JwtAuthHelper jwtAuthHelper = new JwtAuthHelper();
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
 
@@ -30,14 +28,11 @@ public class JwtAuthenticationFilter implements Filter {
         }
 
         try {
-            jwtAuthHelper.verifyToken(token).getToken();
+            SecurityContextHolder.getContext().setAuthentication(new SsnJwtAuthentication(token));
+            filterChain.doFilter(servletRequest, servletResponse);
         } catch (JWTVerificationException e) {
             httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return;
         }
-
-        SecurityContextHolder.getContext().setAuthentication(new SsnJwtAuthentication(token));
-        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

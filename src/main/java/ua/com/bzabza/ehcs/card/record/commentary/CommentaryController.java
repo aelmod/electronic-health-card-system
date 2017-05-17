@@ -1,4 +1,4 @@
-package ua.com.bzabza.ehcs.patient.card.record.commentary;
+package ua.com.bzabza.ehcs.card.record.commentary;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;

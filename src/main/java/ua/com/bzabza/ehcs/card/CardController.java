@@ -1,4 +1,4 @@
-package ua.com.bzabza.ehcs.patient.card;
+package ua.com.bzabza.ehcs.card;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package ua.com.bzabza.ehcs.patient.card.record.commentary;
+package ua.com.bzabza.ehcs.card.record.commentary;
 
 import org.springframework.stereotype.Repository;
 import ua.com.bzabza.ehcs.BaseRepository;

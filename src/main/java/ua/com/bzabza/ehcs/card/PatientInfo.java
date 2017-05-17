@@ -1,4 +1,4 @@
-package ua.com.bzabza.ehcs.patient.card;
+package ua.com.bzabza.ehcs.card;
 
 public class PatientInfo {
 

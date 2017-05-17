@@ -1,4 +1,4 @@
-package ua.com.bzabza.ehcs.patient;
+package ua.com.bzabza.ehcs.user;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import ua.com.bzabza.ehcs.city.City;
 import ua.com.bzabza.ehcs.country.Country;
-import ua.com.bzabza.ehcs.user.User;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
@@ -49,7 +48,7 @@ public class PatientRegisterForm {
     private int cityId;
 
     @NotNull
-    private Patient.Sex sex;
+    private User.Sex sex;
 
     @NotNull
     private Integer doctorId;
@@ -76,13 +75,13 @@ public class PatientRegisterForm {
         return false;
     }
 
-    public Patient toPatient() {
+    public User toPatient() {
         Country country = new Country();
         country.setId(countryId);
         City city = new City();
         city.setId(cityId);
         User doctor = new User();
         doctor.setId(doctorId);
-        return new Patient(login, password, fullName, birthday, new Date(), sex, country, city, doctor, phone, email);
+        return new User();
     }
 }

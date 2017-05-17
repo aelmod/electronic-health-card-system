@@ -34,8 +34,8 @@ public class FirstSeed {
 
     @PostConstruct
     public void initData() {
-        createInitUser();
         initRoles();
+        createInitUser();
     }
 
     private void initRoles() {
@@ -47,7 +47,7 @@ public class FirstSeed {
         List<Privilege> adminPrivileges = Arrays.asList(
                 readPrivilege, writePrivilege);
         createRoleIfNotFound("ROLE_DOCTOR", adminPrivileges);
-        createRoleIfNotFound("ROLE_USER", Collections.singletonList(readPrivilege));
+        createRoleIfNotFound("ROLE_PATIENT", Collections.singletonList(readPrivilege));
     }
 
     private Privilege createPrivilegeIfNotFound(String name) {
@@ -73,8 +73,15 @@ public class FirstSeed {
     }
 
     private void createInitUser() {
-        User user = new User("hyisos11Loh", "hyisos11@mail.ru", "hyisos11", "hyisos11");
+        User user = new User();
+        user.setFullName("hyisos11Loh");
+        user.setEmail("hyisos11@mail.ru");
+        user.setUsername("hyisos11");
+        user.setPassword("hyisos11");
         user.setSecret("IQTRIHV5V2UCFWNA");
+
+        user.setRoles(Collections.singleton(roleService.findOneByName("ROLE_DOCTOR")));
+
         try {
             userService.getUserByUsername("hyisos11");
         } catch (EntityNotFoundException e) {
