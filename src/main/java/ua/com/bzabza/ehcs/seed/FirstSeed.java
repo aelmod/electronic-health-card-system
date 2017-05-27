@@ -73,10 +73,10 @@ public class FirstSeed {
     }
 
     private void createInitUser() {
-        User user = new User("hyisos11Loh", "hyisos11@mail.ru", "hyisos11", "hyisos11");
+        User user = new User("admin", "admin@mail.ru", "admin", "admin");
         user.setSecret("IQTRIHV5V2UCFWNA");
         try {
-            userService.getUserByUsername("hyisos11");
+            userService.getUserByUsername("admin");
         } catch (EntityNotFoundException e) {
             userService.save(user);
         }
