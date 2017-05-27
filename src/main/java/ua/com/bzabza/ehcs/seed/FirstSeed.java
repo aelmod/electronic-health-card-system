@@ -34,8 +34,8 @@ public class FirstSeed {
 
     @PostConstruct
     public void initData() {
-        createInitUser();
         initRoles();
+        createInitUser();
     }
 
     private void initRoles() {
